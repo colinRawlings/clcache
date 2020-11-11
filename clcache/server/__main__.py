@@ -75,6 +75,10 @@ class Connection:
         pipe.start_read(self._onClientRead)
 
     def _onClientRead(self, pipe, data, error):
+        
+        if data is None:
+            return
+        
         self._readBuffer += data
         if self._readBuffer.endswith(b'\x00'):
             paths = self._readBuffer[:-1].decode('utf-8').splitlines()
